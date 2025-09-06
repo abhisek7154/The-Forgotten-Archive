@@ -15,7 +15,7 @@ datasource db {
 }
 
 model User {
-  id       String   @id @default(uuid())
+  id       String   @id @default(uuid()) // It will create a very long random string (uuid)
   email    String   @unique
   name     String?
   password String
