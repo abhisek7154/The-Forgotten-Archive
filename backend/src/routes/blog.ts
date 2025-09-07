@@ -26,7 +26,7 @@ export const blogRouter = new Hono<{
 // if you know your environment allows long-lived globals.
 function getPrisma(c: any) {
   return new PrismaClient({
-    datasourceUrl: c.env.DATABASE_URL_EDGE,
+    datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
 }
 
@@ -121,6 +121,7 @@ blogRouter.put("/", async (c) => {
 /**
  * Get single post by query param ?id=...
  */
+
 blogRouter.get("/", async (c) => {
   const id = c.req.query("id");
   if (!id) return c.json({ error: "Missing id query param" }, 400);

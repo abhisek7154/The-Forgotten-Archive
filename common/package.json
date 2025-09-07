@@ -1,0 +1,37 @@
+{
+  "name": "abhi-medium-blog",
+  "version": "1.0.3",
+  "description": "Medium-style blog backend built with Hono, Prisma, and Cloudflare Workers",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhisek7154/The-Forgotten-Archive.git"
+  },
+  "keywords": [
+    "cloudflare",
+    "prisma",
+    "hono",
+    "blog"
+  ],
+  "author": "Abhisek sahoo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abhisek7154/The-Forgotten-Archive/issues"
+  },
+  "homepage": "https://github.com/abhisek7154/The-Forgotten-Archive#readme"
+}
