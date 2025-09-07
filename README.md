@@ -438,5 +438,5 @@ app.post("/api/v1/user/signup", async (c) => {
 Developed and maintained by **Abhisek Sahoo**
 
 * 🌐 GitHub
-* 📧 [abhiseksahoo7154@example.com](mailto:abhiseksahoo7154@example.com)
+* 📧 [abhiseksahoo7154@example.com](mailto:abhiperl1000@gmail.com)
   (replace with your actual email if you want)
