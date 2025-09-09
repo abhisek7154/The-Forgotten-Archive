@@ -1,28 +1,28 @@
 import z from "zod";
 
-export const signupInput = z.object({
+export const SignUpInput = z.object({
   email: z.string().email(),
   password: z.string().min(6),
   name: z.string().optional(),
 });
 
-export const signinInput = z.object({
+export const SignInInput = z.object({
   email: z.string().email(),
   password: z.string().min(6),
 });
 
-export const createBlogInput = z.object({
+export const CreateBlogInput = z.object({
   title: z.string(),
   content: z.string(),
 });
 
-export const editBlogInput = z.object({
-  id: z.string(), // Prisma Post.id is a uuid string
+export const EditBlogInput = z.object({
+  id: z.string().uuid(), // stricter than plain string
   title: z.string(),
   content: z.string(),
 });
 
-export type SignupInput = z.infer<typeof signupInput>;
-export type SigninInput = z.infer<typeof signinInput>;
-export type CreateBlogInput = z.infer<typeof createBlogInput>;
-export type EditBlogInput = z.infer<typeof editBlogInput>;
+export type SignUpInput = z.infer<typeof SignUpInput>;
+export type SignInInput = z.infer<typeof SignInInput>;
+export type CreateBlogInput = z.infer<typeof CreateBlogInput>;
+export type EditBlogInput = z.infer<typeof EditBlogInput>;

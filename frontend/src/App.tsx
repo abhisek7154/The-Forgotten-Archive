@@ -1,11 +1,18 @@
-import './input.css'
-
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { SignUp } from './pages/signup'
+import { SignIn } from './pages/signin'
+import { Blog } from './pages/blog'
 function App() {
+
   return (
     <>
-    <div className="bg-gray-900">
-        <h1 className="text-center text-white">Medium clone</h1>
-    </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/blog" element={<Blog />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
