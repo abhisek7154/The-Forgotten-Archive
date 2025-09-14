@@ -1,6 +1,6 @@
 export const Quote = () => {
   return (
-    <div className="bg-slate-800 text-white h-screen flex items-center justify-center">
+    <div className="bg-black text-white h-screen flex items-center justify-center">
       <div className="max-w-lg text-center">
         <p className="text-2xl md:text-3xl font-bold mb-6">
           “The customer support I received was exceptional. The support team went

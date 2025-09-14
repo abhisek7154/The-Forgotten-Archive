@@ -129,7 +129,16 @@ blogRouter.get("/", async (c) => {
   const prisma = getPrisma(c);
 
   try {
-    const post = await prisma.post.findUnique({ where: { id } });
+    const post = await prisma.post.findUnique({ 
+      where: { id } ,
+      include: {
+        author: {
+          select: {
+            name: true,
+          }
+        }
+      }
+    });
     if (!post) return c.json({ error: "Not found" }, 404);
     return c.json({ post });
   } catch (e) {
@@ -143,6 +152,21 @@ blogRouter.get("/", async (c) => {
  */
 blogRouter.get("/bulk", async (c) => {
   const prisma = getPrisma(c);
-  const posts = await prisma.post.findMany({ orderBy: { createdAt: "desc" } }); // if you have createdAt
+  const posts = await prisma.post.findMany({
+    select:{
+      content: true,
+      title: true,
+      id: true,
+      createdAt: true, 
+      author: {
+        select: {
+          name: true
+        }
+      }
+    },
+    orderBy: {
+      createdAt: "desc",
+    }
+  });
   return c.json({ posts });
 });
