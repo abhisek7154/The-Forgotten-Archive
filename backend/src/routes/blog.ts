@@ -1,62 +1,7 @@
-import { PrismaClient } from "@prisma/client/edge";
-import { withAccelerate } from "@prisma/extension-accelerate";
-import { Hono } from "hono";
-import { verify } from "hono/jwt";
+import { blogRouter } from "../middleware/middleware";
+import { getPrisma } from "../helper/getprisma"
 
-type JwtPayload = {
-  id: string;
-  email?: string;
-  iat?: number;
-  exp?: number;
-};
 
-export const blogRouter = new Hono<{
-  Bindings: {
-    DATABASE_URL: string;
-    DATABASE_URL_EDGE: string;
-    JWT_SECRET: string;
-  };
-  Variables: {
-    userId?: string;
-  };
-}>();
-
-// small helper to create Prisma client using the edge DATABASE URL for this request.
-// On edge runtimes it's common to create per-request, but you can implement caching
-// if you know your environment allows long-lived globals.
-function getPrisma(c: any) {
-  return new PrismaClient({
-    datasourceUrl: c.env.DATABASE_URL,
-  }).$extends(withAccelerate());
-}
-
-/**
- * Auth middleware: extracts `Bearer <token>` and sets `userId` in context Variables.
- */
-
-blogRouter.use("/*", async (c, next) => {
-  const authHeader = c.req.header("authorization") || "";
-
-  if (!authHeader.startsWith("Bearer ")) {
-    return c.json({ message: "Missing Authorization header" }, 401);
-  }
-
-  const token = authHeader.split(" ")[1];
-
-  try {
-    const user = (await verify(token, c.env.JWT_SECRET)) as JwtPayload | null;
-
-    if (!user || !user.id) {
-      return c.json({ message: "Invalid token" }, 401);
-    }
-
-    c.set("userId", user.id);
-    await next();
-  } catch (err) {
-    console.error("[AUTH] token verify error", err);
-    return c.json({ message: "Invalid or expired token" }, 401);
-  }
-});
 
 /**
  * Create a post (authenticated)
@@ -150,6 +95,8 @@ blogRouter.get("/", async (c) => {
 /**
  * Bulk posts (public or protected as you like)
  */
+
+
 blogRouter.get("/bulk", async (c) => {
   const prisma = getPrisma(c);
   const posts = await prisma.post.findMany({
@@ -170,3 +117,6 @@ blogRouter.get("/bulk", async (c) => {
   });
   return c.json({ posts });
 });
+/**
+ * Like / Unlike a post
+ */

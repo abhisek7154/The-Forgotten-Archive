@@ -1,15 +1,23 @@
+import LikedButton from "./LikeButton";
+
 interface BlogCardProps {
     authorName: string;
     title: string;
     content: string;
     publishedDate: string;
+    initialLikes?: number;
+    initialuserLiked?: boolean;
+    postId:string;
 }
 
 export const BlogCard = ({
     authorName,
     title,
     content,
-    publishedDate
+    publishedDate,
+    postId,
+    initialLikes = 0,
+    initialuserLiked = false,
 }: BlogCardProps) => {
     return(
         <div className="p-4 border-b border-slate-200 pb-4">
@@ -33,6 +41,13 @@ export const BlogCard = ({
             </div>
             <div className="w-full text-slate-500 text-sm font-thin pt-4">
                 {`${Math.ceil(content.length / 100)} minute read`}
+            </div>
+            <div className="flex flex-row justify-end -mt-4 ">
+                <LikedButton
+                postId={postId}
+                initialCount={initialLikes}
+                initialuserLiked={initialuserLiked}
+                />
             </div>
         </div>
     )
